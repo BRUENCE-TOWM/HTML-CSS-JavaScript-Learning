@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>1~100素数判断</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<!-- 粒子背景容器 -->
+		<div id="particle-container"></div>
+		
+		<header class="head-container">
+			<div class="header-content">
+				<i class="fas fa-calculator"></i>
+				<h1 class="head-text">1~100的素数和合数表格</h1>
+				<div class="header-legend">
+					<span class="legend-item prime-legend">
+						<i class="fas fa-shield-alt"></i> 素数
+					</span>
+					<span class="legend-item composite-legend">
+						<i class="fas fa-cube"></i> 合数
+					</span>
+					<span class="legend-item special-legend">
+						<i class="fas fa-star"></i> 特殊数(1)
+					</span>
+				</div>
+			</div>
+		</header>
+
+		<div class="table-wrapper">
+			<div id="tablecontainer"></div>
+		</div>
+
+		<div id="info-tooltip" class="info-tooltip"></div>
+
+		<!-- 点击特效容器 -->
+		<div id="click-effects"></div>
+
+		<footer>
+			<p>素数是大于1的自然数，除了1和它本身外，不能被其他自然数整除</p>
+		</footer>
+
+		<script src="js/prime.js"></script>
+	</body>
+</html>
