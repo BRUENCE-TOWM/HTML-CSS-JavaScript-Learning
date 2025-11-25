@@ -1,0 +1,250 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #eef1f5;
+	min-height: 100vh;
+}
+
+.container {
+	width: 95%;
+	max-width: 1200px;
+	background-color: #ffffff;
+	margin: 30px auto;
+	font-family: "Microsoft YaHei", "Heiti SC", Arial, sans-serif;
+	padding: 30px 25px;
+	border-radius: 8px;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.title-container {
+	text-align: center;
+	background: linear-gradient(90deg, #4a6fa5, #6b8eb7);
+	margin-bottom: 30px;
+	padding: 18px 0;
+	border-radius: 6px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title-container h1 {
+	color: #ffffff;
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0;
+	letter-spacing: 0.8px;
+}
+
+.calc-form {
+	background-color: #f8f9fa;
+	padding: 25px;
+	border-radius: 8px;
+	margin-bottom: 30px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.calc-form h3 {
+	color: #34495e;
+	font-size: 18px;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.form-group {
+	margin-bottom: 18px;
+	display: flex;
+	align-items: center;
+}
+
+.form-group label {
+	width: 120px;
+	color: #495057;
+	font-size: 15px;
+}
+
+.form-group input {
+	flex: 1;
+	padding: 10px 12px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	font-size: 15px;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+	border-color: #6b8eb7;
+	box-shadow: 0 0 0 2px rgba(107, 142, 183, 0.1);
+}
+
+.btn-group {
+	margin-left: 120px;
+	margin-bottom: 15px;
+}
+
+.btn-group button, #clear-btn {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	margin-right: 10px;
+}
+
+#calc-btn {
+	background-color: #4a6fa5;
+	color: #ffffff;
+}
+
+#calc-btn:hover {
+	background-color: #3d5d8a;
+}
+
+#save-btn {
+	background-color: #3498db;
+	color: #ffffff;
+}
+
+#save-btn:hover {
+	background-color: #2980b9;
+}
+
+#clear-btn {
+	background-color: #e74c3c;
+	color: #ffffff;
+	margin-bottom: 15px;
+}
+
+#clear-btn:hover {
+	background-color: #c0392b;
+}
+
+.result {
+	margin-left: 120px;
+	font-size: 15px;
+	line-height: 1.8;
+}
+
+.success {
+	color: #27ae60;
+	font-weight: 500;
+}
+
+.error {
+	color: #e74c3c;
+	font-weight: 500;
+}
+
+.table-title {
+	color: #34495e;
+	font-size: 18px;
+	margin: 30px 0 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.section {
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
+.section table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.section th {
+	background-color: #34495e;
+	color: #ffffff;
+	font-weight: 600;
+	padding: 14px 8px;
+	border: 1px solid #dee2e6;
+	font-size: 15px;
+}
+
+.section td {
+	color: #343a40;
+	padding: 12px 8px;
+	border: 1px solid #e9ecef;
+	font-size: 14px;
+}
+
+.section tr:nth-child(even) {
+	background-color: #f1f3f5;
+}
+
+.section tr:hover {
+	background-color: #e9ecef;
+	transition: background-color 0.2s ease;
+}
+
+.saved-records {
+	background-color: #f8f9fa;
+	padding: 25px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.saved-records h3 {
+	color: #34495e;
+	font-size: 18px;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.records-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	background-color: #ffffff;
+}
+
+.records-table th {
+	background-color: #4a6fa5;
+	color: #ffffff;
+	padding: 12px 8px;
+	border: 1px solid #dee2e6;
+	font-size: 14px;
+}
+
+.records-table td {
+	color: #343a40;
+	padding: 10px 8px;
+	border: 1px solid #e9ecef;
+	font-size: 13px;
+}
+
+.records-table tr:nth-child(even) {
+	background-color: #f9fafc;
+}
+
+.delete-btn {
+	background-color: #f39c12;
+	color: #ffffff;
+	border: none;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 12px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+	background-color: #e67e22;
+}
+
+.no-record {
+	color: #6c757d;
+	text-align: center;
+	padding: 20px 0;
+	font-size: 14px;
+}

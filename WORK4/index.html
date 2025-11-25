@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>个人所得税计算</title>
+		<link rel="stylesheet" href="css/styles.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="title-container">
+				<h1>个人所得税计算</h1>
+			</div>
+			<div class="table-title">
+				<h3>示例</h3>
+			</div>
+			<script type="text/javascript" src="js/Tax.js"></script>
+			<script type="text/javascript">
+				document.write('<div class="section">');
+				document.write('<table>');
+				document.write('<tr>');
+				document.write('<th>月工资（元）</th>');
+				document.write('<th>年终奖（元）</th>');
+				document.write('<th>每月所得税（元）</th>');
+				document.write('<th>一次性所得税（元）</th>');
+				document.write('</tr>');
+
+				var Incomes = [3500, 7000, 10000, 15000, 50000, 80000, 100000];
+				for (var i = 0; i < Incomes.length; ++i) {
+					var MonthIncome = Incomes[i];
+					var YearIncome = Math.floor(MonthIncome * (Math.random() * 17 + 5));
+					var MonthTax = incomeTax?.CalcMonthTax?.(MonthIncome) || 0;
+					var YearTax = incomeTax?.CalcYearTax?.(MonthIncome, YearIncome) || 0;
+					document.write('<tr>');
+					document.write('<td>' + MonthIncome + '</td>');
+					document.write('<td>' + YearIncome + '</td>');
+					document.write('<td>' + MonthTax + '</td>');
+					document.write('<td>' + YearTax + '</td>');
+					document.write('</tr>');
+				}
+				document.write('</table>');
+				document.write('</div>');
+			</script>
+			<div class="calc-form">
+				<h3>你的所得税计算</h3>
+				<div class="form-group">
+					<label for="monthly-salary">月工资（元）：</label>
+					<input type="number" id="monthly-salary" min="0" placeholder="请输入月工资">
+				</div>
+				<div class="form-group">
+					<label for="yearly-bonus">年终奖（元）：</label>
+					<input type="number" id="yearly-bonus" min="0" placeholder="请输入年终奖">
+				</div>
+				<div class="btn-group">
+					<button id="calc-btn">计算个税</button>
+					<button id="save-btn">保存记录</button>
+				</div>
+				<div class="result" id="calc-result"></div>
+			</div>
+			<div class="saved-records">
+				<h3>保存的计算记录</h3>
+				<button id="clear-btn">清空所有记录</button>
+				<div id="records-list"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			document.addEventListener('DOMContentLoaded', function() {
+				var monthlySalaryInput = document.getElementById('monthly-salary');
+				var yearlyBonusInput = document.getElementById('yearly-bonus');
+				var calcBtn = document.getElementById('calc-btn');
+				var saveBtn = document.getElementById('save-btn');
+				var clearBtn = document.getElementById('clear-btn');
+				var calcResult = document.getElementById('calc-result');
+				var recordsList = document.getElementById('records-list');
+				calcBtn.addEventListener('click', function() {
+					var monthly = Number(monthlySalaryInput.value.trim()) || 0;
+					var yearly = Number(yearlyBonusInput.value.trim()) || 0;
+
+					if (monthly < 0 || yearly < 0) {
+						calcResult.innerHTML = '<span class="error">输入值不能为负数！</span>';
+						return;
+					}
+
+					var monthTax = incomeTax?.CalcMonthTax?.(monthly) || 0;
+					var yearTax = incomeTax?.CalcYearTax?.(monthly, yearly) || 0;
+					calcResult.innerHTML = `
+                    <p>计算结果：</p>
+                    <p>月工资：${monthly.toFixed(2)} 元 → 每月所得税：${monthTax} 元</p>
+                    <p>年终奖：${yearly.toFixed(2)} 元 → 一次性所得税：${yearTax} 元</p>
+                `;
+				});
+
+				saveBtn.addEventListener('click', function() {
+					var monthly = Number(monthlySalaryInput.value.trim()) || 0;
+					var yearly = Number(yearlyBonusInput.value.trim()) || 0;
+
+					if (monthly === 0 && yearly === 0) {
+						calcResult.innerHTML = '<span class="error">月工资和年终奖不能同时为0！</span>';
+						return;
+					}
+
+					var monthTax = incomeTax?.CalcMonthTax?.(monthly) || 0;
+					var yearTax = incomeTax?.CalcYearTax?.(monthly, yearly) || 0;
+
+					var record = {
+						id: Date.now(),
+						monthly: monthly,
+						yearly: yearly,
+						monthTax: monthTax,
+						yearTax: yearTax,
+						time: new Date().toLocaleString()
+					};
+
+					var savedRecords = JSON.parse(localStorage.getItem('taxRecords')) || [];
+					savedRecords.unshift(record);
+					localStorage.setItem('taxRecords', JSON.stringify(savedRecords));
+
+					calcResult.innerHTML = '<span class="success">记录保存成功！</span>';
+					renderRecords();
+				});
+
+				clearBtn.addEventListener('click', function() {
+					if (confirm('确定要清空所有保存的记录吗？')) {
+						localStorage.removeItem('taxRecords');
+						renderRecords();
+					}
+				});
+
+				function renderRecords() {
+					var savedRecords = JSON.parse(localStorage.getItem('taxRecords')) || [];
+
+					if (savedRecords.length === 0) {
+						recordsList.innerHTML = '<p class="no-record">暂无保存的记录</p>';
+						return;
+					}
+
+					let html = `
+                    <table class="records-table">
+                        <tr>
+                            <th>保存时间</th>
+                            <th>月工资（元）</th>
+                            <th>年终奖（元）</th>
+                            <th>每月所得税（元）</th>
+                            <th>一次性所得税（元）</th>
+                            <th>操作</th>
+                        </tr>
+                `;
+
+					savedRecords.forEach(record => {
+						html += `
+                        <tr>
+                            <td>${record.time}</td>
+                            <td>${record.monthly.toFixed(2)}</td>
+                            <td>${record.yearly.toFixed(2)}</td>
+                            <td>${record.monthTax}</td>
+                            <td>${record.yearTax}</td>
+                            <td><button class="delete-btn" data-id="${record.id}">删除</button></td>
+                        </tr>
+                    `;
+					});
+
+					html += '</table>';
+					recordsList.innerHTML = html;
+					document.querySelectorAll('.delete-btn').forEach(btn => {
+						btn.addEventListener('click', function() {
+							var id = Number(this.getAttribute('data-id'));
+							var updatedRecords = savedRecords.filter(record => record.id !== id);
+							localStorage.setItem('taxRecords', JSON.stringify(updatedRecords));
+							renderRecords();
+						});
+					});
+				}
+				renderRecords();
+			});
+		</script>
+	</body>
+</html>
